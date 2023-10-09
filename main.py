@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
-from matplotlib import font_manager, rc
+import os
+from matplotlib import font_manager as fm
 font_path = "./ngulim.ttf"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
@@ -26,10 +27,21 @@ def predictFunc(Model, dataList):
     result = Model.predict([dataList])
     return result
 
+@st.cache_data
+def fontRegistered():
+    font_dirs = [os.getcwd() + '/customFonts']
+    font_files = fm.findSystemFonts(fontpaths=font_dirs)
+
+    for font_file in font_files:
+        fm.fontManager.addfont(font_file)
+    fm._load_fontmanager(try_read_cache=False)
+
 st.title('OPS를 이용한 선수가치 예측하기')
 
 df = pd.read_csv('./playerstat.csv')
-
+fontRegistered()
+fontNames = [f.name for f in fm.fontManager.ttflist]
+fontname = st.selectbox("폰트 선택", unique(fontNames))
 
 tab1, tab2, tab3 = st.tabs(['Home', '프로젝트 결과', '프로젝트 설명'])
 
