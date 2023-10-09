@@ -4,12 +4,6 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
-import os
-from matplotlib import font_manager, rc
-font_path = "./ngulim.ttf"
-font = font_manager.FontProperties(fname=font_path).get_name()
-rc('font', family=font)
-
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 def machineLearning(df):
@@ -42,9 +36,9 @@ with tab2:
         dummy1, y_pred, y=machineLearning(df)
         fig=plt.figure
         plt.scatter(df['OPS'], y)
-        plt.title('OPS에 따른 선수가치 예측')
+        plt.title('OPS-Income')
         plt.xlabel('OPS')
-        plt.ylabel('연봉(단위:만)')
+        plt.ylabel('AnnualIncome')
         plt.plot(df['OPS'], y_pred, color='red')
         st.pyplot()
 
